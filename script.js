@@ -11,34 +11,36 @@ function getTimeTable()
     var container = $(".container");
 
     var curr;
-    for(let i = 0; i < 9; i++) 
+    for(let i = 9; i < 18; i++) 
     {
-        curr = i + 9;
+        // creating row box
         var time = $("<div>");
         time.attr("class", "row hour");
 
         // appending hour box
-        if(curr < 13)
+        if(i < 13)
         {
-            time.append('<div class="time-block col-md-1">' + curr + 'AM</div>');
+            time.append('<div class="time-block col-md-1">' + i + 'AM</div>');
         }
         else
         {
-            time.append('<div class="time-block col-md-1">' + (curr - 12) + 'PM</div>');
+            time.append('<div class="time-block col-md-1">' + (i - 12) + 'PM</div>');
         }
         
         // rendering and appending text box
         var textBox = $("<textarea>");
-        textBox.attr("id", curr);
-        textBox.attr("class", "col-md-10 future");
-        getSavedSchedule(textBox, curr);
+        textBox.attr("id", i);
+        textBox.attr("class", "description col-md-10 future");
+        getSavedSchedule(textBox, i);
         time.append(textBox);
 
         // appending button
         var button = $("<button>");
-        button.attr("class", "saveBtn col-md-1");
+        button.attr("class", "btn saveBtn col-md-1");
+        var buttonId = "#button" + i;
+        button.attr("id", buttonId);
         button.text("Save");
-        button.click(saveButton(curr, textBox));
+
         time.append(button);
         container.append(time);
     }
@@ -47,13 +49,8 @@ function getTimeTable()
 // function to get saved text from local storage
 function getSavedSchedule(textBox, key) {
     textBox.text(localStorage.getItem(key));
-
 }
 
-// function to save contents in textarea to local storage as clicking save button
-function saveButton(key, textBox){
-    localStorage.setItem(key, textBox.text);
-}
 
 // function to give background color to text area as current time
 function getColor()
@@ -67,11 +64,24 @@ function getColor()
     for(let i = 9; i < currTime; i++)
     {
         var currText = $("#" + i);
-        currText.attr("class", "col-md-10 past");
+        currText.attr("class", "description col-md-10 past");
     }
-    $("#" + currTime).attr("class", "col-md-10 present");
+    $("#" + currTime).attr("class", "description col-md-10 present");
 }
 
 getCurrentDay();
 getTimeTable();
 getColor();
+
+$(document).ready(function () {
+    $(".saveBtn").on("click", function () {
+    // Get nearby values of the description in JQuery
+        var text = $(this).siblings(".description").val();
+        var time = $(this).siblings(".description").attr("id");
+
+        // Save text in local storage
+        localStorage.setItem(time, text);
+            }
+        )
+    }
+);
