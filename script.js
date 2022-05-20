@@ -64,9 +64,11 @@ function getColor()
     for(let i = 9; i < currTime; i++)
     {
         var currText = $("#" + i);
-        currText.attr("class", "description col-md-10 past");
+        currText.removeClass("future");
+        currText.addClass("past");
     }
-    $("#" + currTime).attr("class", "description col-md-10 present");
+    $("#" + currTime).removeClass("future");
+    $("#" + currTime).addClass("present");
 }
 
 getCurrentDay();
