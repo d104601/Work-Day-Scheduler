@@ -18,6 +18,7 @@ No additional installation required. Click the link in "Deployed Website" below 
 https://d104601.github.io/Work-Day-Scheduler/
 
 ## Sample Application Screenshot
+![sample](https://github.com/d104601/Work-Day-Scheduler/blob/main/screenshot.jpg)
 
 
 ## Credits
